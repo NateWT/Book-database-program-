@@ -207,7 +207,20 @@ def app():
                 time.sleep(1.5)
         elif choice == '4':
             # book analysis
-            pass
+            oldest_book = session.query(Book).order_by(Book.published_date).first()
+            newest_book = session.query(Book).order_by(Book.published_date.desc()).first()
+            total_books = session.query(Book).count()
+            python_books = session.query(Book).filter(Book.title.like('%python%')).count()
+            cheapest_book = session.query(Book).order_by(Book.price).first()
+            most_expensive = session.query(Book).order_by(Book.price.desc()).first()
+            print(f'''
+                  \n***** BOOK ANALYSIS *****
+                  \rOldest Book: {oldest_book}
+                  \rNewest Book: {newest_book}
+                  \rTotal Books: {total_books}
+                  \rCheapest Book: {cheapest_book}
+                  \rMost Expensive Book: {most_expensive}''')
+            input('\nPress ENTER when ready to return to the main menu')
         else:
             print('GOODBYE')
             app_running = False
